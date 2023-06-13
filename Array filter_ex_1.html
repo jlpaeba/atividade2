@@ -70,27 +70,61 @@
     </nav>
     
 
-    <h1>JavaScript Arrays</h1>
+   <h1>JavaScript Arrays</h1>
     <h2>metodo filtro</h2>
     
     <p>Digite os valores separados por vírgulas:</p>
     
     <input type="text" id="inputValues">
+    <p>Digite o filtro (ex: > 19):</p>
+    <input type="text" id="inputFilter">
     <button onclick="createArray()">Create Array</button>
     
     <p id="demo"></p>
     
+    <h3>Valores inseridos:</h3>
+    <ul id="inputList"></ul>
+    
     <script>
-    function createArray() {
-      var inputValues = document.getElementById("inputValues").value;
-      var valuesArray = inputValues.split(",").map(Number);
+        function createArray() {
+            var inputValues = document.getElementById("inputValues").value;
+            var valuesArray = inputValues.split(",").map(Number);
+            var filterCondition = document.getElementById("inputFilter").value;
     
-      document.getElementById("demo").innerHTML = valuesArray.filter(checkAdult);
-    }
+            document.getElementById("demo").innerHTML = valuesArray.filter(function(value) {
+                return evaluateCondition(value, filterCondition);
+            });
     
-    function checkAdult(value) {
-      return value >= 18;
-    }
+            // Exibir os valores inseridos na lista
+            var inputList = document.getElementById("inputList");
+            inputList.innerHTML = ""; // Limpar a lista
+    
+            valuesArray.forEach(function(value) {
+                var listItem = document.createElement("li");
+                listItem.textContent = value;
+                inputList.appendChild(listItem);
+            });
+        }
+        
+        function evaluateCondition(value, condition) {
+            var operators = ['==', '===', '!=', '!==', '>', '>=', '<', '<='];
+            var validOperator = operators.find(function(operator) {
+                return condition.includes(operator);
+            });
+            
+            if (validOperator) {
+                var expression = value + condition;
+                return eval(expression);
+            }
+            
+            return false;
+        }
+    </script>
+    
+    <footer>
+        <p>João Lucas desenvolvedor brabo</p>
+    </footer>
+   
     </script>
 
 
